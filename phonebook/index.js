@@ -40,7 +40,24 @@ app.get('/info', (request, response) => {
         <p>${new Date().toUTCString()}</p>
         </div>`;
     response.send(output)
-})
+});
+
+// Get information for a particular person
+app.get('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id);
+
+    const person = persons.find(per => per.id === id);
+
+    // Check whether the person is not undefined
+    if(person){
+        response.send(person);
+    }else{
+        console.log(person);
+        response.status(400).end();
+    }
+});
+
+
 const PORT = 3001;
 
 app.listen(PORT, ()=>{
