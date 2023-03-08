@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.json());
 
-const  persons = [
+let persons = [
     { 
       "id": 1,
       "name": "Arto Hellas", 
@@ -57,6 +57,14 @@ app.get('/api/persons/:id', (request, response) => {
     }
 });
 
+// Now, this functionality will delete a single instance of the person from the server
+app.delete('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id);
+    
+    persons = persons.filter(elem => elem.id !== id);
+    response.json(persons);
+    
+});
 
 const PORT = 3001;
 
