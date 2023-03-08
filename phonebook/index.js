@@ -76,19 +76,29 @@ app.post('/api/persons/', (request, response) => {
     const body = request.body;
     
     if(!body.name || !body.number){
+        console.log(body.name);
+        console.log(body.number);
         return response.status(400).json({
-            error: `Either the name or the number is missing.`
+            error: `Either the name or the number is missing.`,
         });
-    }
+    }else{
 
-    const person = {
-        id: generateId(),
-        name: body.name,
-        number: body.number
+        const nam = persons.find(element => element.name === body.name);
+        if(nam){
+            return response.status(400).json({
+                error: 'Name already exists',
+            });
+        }else{
+            const person = {
+                id: generateId(),
+                name: body.name,
+                number: body.number
+            }
+    
+            persons.concat(person);
+            response.json(person);
+        }
     }
-
-    persons.concat(person);
-    response.json(person);
 });
 
 
