@@ -5,6 +5,11 @@ const app = express();
 
 app.use(express.json());
 
+const generateId = () => {
+    let maxId = Math.max(...persons.map(person => person.id))
+    return maxId + 1;
+}
+
 let persons = [
     { 
       "id": 1,
@@ -66,6 +71,21 @@ app.delete('/api/persons/:id', (request, response) => {
     
 });
 
+// Adding an entry the phone book
+app.post('/api/persons/', (request, response) => {
+    const body = request.body;
+    if(body){
+        const person = [{
+            id: generateId(),
+            ...body
+        }]
+
+        persons.concat(person)
+        response.send(persons)
+    }else{
+        response.status(204).status(400).end();
+    }
+});
 const PORT = 3001;
 
 app.listen(PORT, ()=>{
