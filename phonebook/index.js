@@ -32,6 +32,15 @@ app.get('/api/persons',(request, response) =>{
     response.send(persons);
 });
 
+// The page has to show the time that the request was received and how many
+// entries are in the phonebook at the time of processing the request.
+app.get('/info', (request, response) => {
+    let output = `<div>
+        <p>Phonebook has info for ${persons.length} people</p> 
+        <p>${new Date().toUTCString()}</p>
+        </div>`;
+    response.send(output)
+})
 const PORT = 3001;
 
 app.listen(PORT, ()=>{
