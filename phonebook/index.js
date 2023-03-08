@@ -74,18 +74,24 @@ app.delete('/api/persons/:id', (request, response) => {
 // Adding an entry the phone book
 app.post('/api/persons/', (request, response) => {
     const body = request.body;
-    if(body){
-        const person = [{
-            id: generateId(),
-            ...body
-        }]
-
-        persons.concat(person)
-        response.send(persons)
-    }else{
-        response.status(204).status(400).end();
+    
+    if(!body.name || !body.number){
+        return response.status(400).json({
+            error: `Either the name or the number is missing.`
+        });
     }
+
+    const person = {
+        id: generateId(),
+        name: body.name,
+        number: body.number
+    }
+
+    persons.concat(person);
+    response.json(person);
 });
+
+
 const PORT = 3001;
 
 app.listen(PORT, ()=>{
