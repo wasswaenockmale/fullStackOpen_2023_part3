@@ -74,7 +74,7 @@ app.delete('/api/persons/:id', (request, response) => {
 // Adding an entry the phone book
 app.post('/api/persons/', (request, response) => {
     const body = request.body;
-    console.log(body)
+    // console.log(body)
     if(!body.name || !body.number){
         return response.status(400).json({
             error: `Either the name or the number is missing.`,
