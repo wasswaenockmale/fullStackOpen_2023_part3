@@ -1,13 +1,13 @@
 DELETE http://localhost:3001/api/persons/4
 
 ### 
-POST http://localhost:3001/api/persons
+POST http://localhost:3001/api/persons/
 
 Content-Type: application/json
 
 {
-    "name": "Mom Nalongo",
-    "number": "0704506147"
+    "name": "Ketty Kasule",
+    "number": "0705056550",
 }
 
 ####
