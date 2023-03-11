@@ -1,4 +1,5 @@
 const express = require('express');
+const morgan = require('morgan');
 
 const app = express();
 
@@ -8,6 +9,10 @@ const generateId = () => {
 }
 
 app.use(express.json());
+
+// Using the morgan library to log tiny configurations
+app.use(morgan('tiny'));
+
 let persons = [
     { 
       "id": 1,
