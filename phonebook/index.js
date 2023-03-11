@@ -1,15 +1,13 @@
-const { response } = require('express');
 const express = require('express');
 
 const app = express();
-
-app.use(express.json());
 
 const generateId = () => {
     let maxId = Math.max(...persons.map(person => person.id))
     return maxId + 1;
 }
 
+app.use(express.json());
 let persons = [
     { 
       "id": 1,
@@ -44,7 +42,7 @@ app.get('/info', (request, response) => {
         <p>Phonebook has info for ${persons.length} people</p> 
         <p>${new Date().toUTCString()}</p>
         </div>`;
-    response.send(output)
+    response.send(output);
 });
 
 // Get information for a particular person
@@ -98,7 +96,6 @@ app.post('/api/persons/', (request, response) => {
         }
     }
 });
-
 
 const PORT = 3001;
 
