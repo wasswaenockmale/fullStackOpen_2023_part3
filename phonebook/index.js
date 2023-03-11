@@ -13,6 +13,12 @@ app.use(express.json());
 // Using the morgan library to log tiny configurations
 app.use(morgan('tiny'));
 
+morgan.token('body',(req, res)=>{
+    return req.body
+});
+
+app.use(morgan('body'));
+
 let persons = [
     { 
       "id": 1,
