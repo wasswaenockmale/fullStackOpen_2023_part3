@@ -10,6 +10,8 @@ const generateId = () => {
 
 app.use(express.json());
 
+// Make express show static files from the build
+app.use(express.static('build'));
 // Using the morgan library to log tiny configurations
 app.use(morgan('tiny'));
 
@@ -41,6 +43,11 @@ let persons = [
       "number": "39-23-6423122"
     }
 ]
+
+app.get('/', (request, response) => {
+    response.send('<h1>Yes, it works</h1>')
+});
+
 
 app.get('/api/persons',(request, response) =>{
     response.send(persons);
