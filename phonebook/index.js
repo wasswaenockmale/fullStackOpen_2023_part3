@@ -12,6 +12,7 @@ app.use(express.json());
 
 // Make express show static files from the build
 app.use(express.static('build'));
+
 // Using the morgan library to log tiny configurations
 app.use(morgan('tiny'));
 
