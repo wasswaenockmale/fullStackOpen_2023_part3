@@ -97,10 +97,15 @@ app.get('/api/persons/:id', (request, response) => {
 
 // Now, this functionality will delete a single instance of the person from the server
 app.delete('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id);
-    
-    persons = persons.filter(elem => elem.id !== id);
-    response.json(persons);
+    const id = request.params.id;
+    PhoneBook.deleteOne({id: id}).then(res => {
+        response.json(res)
+    }).catch(err => {
+        console.log("Error occured in the delete method.");
+        next(err);
+    });
+    // persons = persons.filter(elem => elem.id !== id);
+    // response.json(persons);
     
 });
 
