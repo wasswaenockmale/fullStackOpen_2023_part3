@@ -144,6 +144,16 @@ app.post('/api/persons/', (request, response) => {
         // }
 });
 
+app.put('/api/person:id', (req, res) => {
+    PhoneBook.findByIdAndUpdate(req.params.id,{number: req.body}, function(err, result){
+        if(err){
+            res.send(err);
+        }
+        else{
+            res.send(result);
+        }
+    })
+});
 const errorHandling = (error, request, response, next) => {
     if(error.name === "CastError"){
         return response.status(400).send({error: 'malformatted id'});
