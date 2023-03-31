@@ -97,8 +97,8 @@ app.get('/api/persons/:id', (request, response) => {
 
 // Now, this functionality will delete a single instance of the person from the server
 app.delete('/api/persons/:id', (request, response) => {
-    const id = request.params.id;
-    PhoneBook.deleteOne({id: id}).then(res => {
+    // const id = request.params.id;
+    PhoneBook.findByIdAndRemove(request.params.id).then(res => {
         response.json(res)
     }).catch(err => {
         console.log("Error occured in the delete method.");
@@ -115,7 +115,6 @@ app.post('/api/persons/', (request, response) => {
     // console.log(body)
     if(body.name && body.number){
         const phonebook = new PhoneBook({
-            id: generateId(),
             name: body.name,
             number: body.number,
         });
@@ -145,6 +144,13 @@ app.post('/api/persons/', (request, response) => {
         // }
 });
 
+const errorHandling = (error, request, response, next) => {
+    if(error.name === "CastError"){
+        return response.status(400).send({error: 'malformatted id'});
+    }
+}
+
+app.use(errorHandling);
 const PORT = process.env.PORT;
 
 app.listen(PORT, ()=>{
