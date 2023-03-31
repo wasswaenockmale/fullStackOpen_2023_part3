@@ -102,7 +102,7 @@ app.delete('/api/persons/:id', (request, response) => {
         response.json(res)
     }).catch(err => {
         console.log("Error occured in the delete method.");
-        next(err);
+        // next(err);
     });
     // persons = persons.filter(elem => elem.id !== id);
     // response.json(persons);
