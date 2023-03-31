@@ -54,7 +54,7 @@ app.get('/', (request, response) => {
 
 app.get('/api/persons',(request, response) =>{
     PhoneBook.find({}).then(res => {
-        response.json(res);
+        response.send(res);
     })
 });
 
@@ -74,10 +74,9 @@ app.get('/info', (request, response) => {
 // Get information for a particular person
 app.get('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id);
-
     PhoneBook.find({id: id}).then(res => {
         if(res){
-            response.json(res);
+            response.send(res);
         }else{
             response.status(400).end();
         }
