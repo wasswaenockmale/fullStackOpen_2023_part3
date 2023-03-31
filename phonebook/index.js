@@ -115,6 +115,7 @@ app.post('/api/persons/', (request, response) => {
     // console.log(body)
     if(body.name && body.number){
         const phonebook = new PhoneBook({
+            id: generateId(),
             name: body.name,
             number: body.number,
         });
