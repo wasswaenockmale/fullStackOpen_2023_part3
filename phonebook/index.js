@@ -80,26 +80,19 @@ app.get('/info', (request, response) => {
 
 // Get information for a particular person
 app.get('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id);
-    PhoneBook.find({id: id}).then(res => {
-        if(res){
-            response.send(res);
+    // const id = Number(request.params.id);
+    PhoneBook.findById(request.params.id).then(phone => {
+        if(phone){
+            response.send(phone);
         }else{
             response.status(400).end();
         }
     }).catch(err => {
         console.log('error occured in /api/persons/:id');
-        console.log(err);
-    })
-    // const person = persons.find(per => per.id === id);
-
-    // Check whether the person is not undefined
-    // if(person){
-    //     response.send(person);
-    // }else{
-    //     console.log(person);
-    //     response.status(400).end();
-    // }
+        next(err);
+        // console.log(err);
+        // response.status(400).send({erro: "malformed id"});
+    });
 });
 
 // Now, this functionality will delete a single instance of the person from the server
