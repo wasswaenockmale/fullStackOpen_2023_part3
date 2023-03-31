@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
 const PhoneBook = require('./models/phonenumber');
 require('dotenv').config();
 
@@ -55,6 +56,9 @@ app.get('/', (request, response) => {
 app.get('/api/persons',(request, response) =>{
     PhoneBook.find({}).then(res => {
         response.send(res);
+    }).catch(err => {
+        console.log('error occured in /api/persons');
+        console.log(err);
     })
 });
 
@@ -67,7 +71,10 @@ app.get('/info', (request, response) => {
             <p>${new Date().toUTCString()}</p>
             </div>`;
         response.send(output);
-    });
+    }).catch(err => {
+        console.log('error occured in /info');
+        console.log(err);
+    })
     // response.send(output);
 });
 
@@ -80,6 +87,9 @@ app.get('/api/persons/:id', (request, response) => {
         }else{
             response.status(400).end();
         }
+    }).catch(err => {
+        console.log('error occured in /api/persons/:id');
+        console.log(err);
     })
     // const person = persons.find(per => per.id === id);
 
