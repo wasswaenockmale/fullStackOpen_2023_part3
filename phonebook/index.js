@@ -1,5 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
+const PhoneBook = require('./models/phonenumber');
+require('dotenv').config();
 
 const app = express();
 
@@ -51,32 +53,44 @@ app.get('/', (request, response) => {
 
 
 app.get('/api/persons',(request, response) =>{
-    response.send(persons);
+    PhoneBook.find({}).then(res => {
+        response.json(res);
+    })
 });
 
 // The page has to show the time that the request was received and how many
 // entries are in the phonebook at the time of processing the request.
 app.get('/info', (request, response) => {
-    let output = `<div>
-        <p>Phonebook has info for ${persons.length} people</p> 
-        <p>${new Date().toUTCString()}</p>
-        </div>`;
-    response.send(output);
+    PhoneBook.find({}).then(res => {
+        let output = `<div>
+            <p>Phonebook has info for ${res.length} people</p> 
+            <p>${new Date().toUTCString()}</p>
+            </div>`;
+        response.send(output);
+    });
+    // response.send(output);
 });
 
 // Get information for a particular person
 app.get('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id);
 
-    const person = persons.find(per => per.id === id);
+    PhoneBook.find({id: id}).then(res => {
+        if(res){
+            response.json(res);
+        }else{
+            response.status(400).end();
+        }
+    })
+    // const person = persons.find(per => per.id === id);
 
     // Check whether the person is not undefined
-    if(person){
-        response.send(person);
-    }else{
-        console.log(person);
-        response.status(400).end();
-    }
+    // if(person){
+    //     response.send(person);
+    // }else{
+    //     console.log(person);
+    //     response.status(400).end();
+    // }
 });
 
 // Now, this functionality will delete a single instance of the person from the server
@@ -116,7 +130,7 @@ app.post('/api/persons/', (request, response) => {
     }
 });
 
-const PORT = 3001;
+const PORT = process.env.PORT;
 
 app.listen(PORT, ()=>{
     console.log(`Phonebook server working on server ${PORT}`);
