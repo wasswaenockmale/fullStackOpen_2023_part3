@@ -1,6 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const PhoneBook = require('./models/phonenumber');
 require('dotenv').config();
 
