@@ -2,10 +2,11 @@ const mongoose = require('mongoose');
 const url = process.env.MONGO_URL;
 mongoose.set('strictQuery');
 
-mongoose.connect(url,)
+mongoose.connect(url)
 .then(()=>{
     console.log('Connection established');
 }).catch(err => {
+    console.log('An error occured in connection');
     console.log(err);
 });
 
