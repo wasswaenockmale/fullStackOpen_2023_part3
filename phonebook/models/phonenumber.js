@@ -14,7 +14,6 @@ mongoose.connect(url)
 
 // now create a schema
 const phoneSchema = new mongoose.Schema({
-    id: Number,
     name: String,
     number: String,
 });
